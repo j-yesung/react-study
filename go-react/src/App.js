@@ -1,22 +1,16 @@
-// import logo from "./logo.svg";
-// import "./App.css";
 import React from "react";
-// App 컴포넌트 (컴포넌트 이름은 무조건 "대문자")
 
-function Son() {
-  return <div>나는 아들입니다.</div>;
+export default function App() {
+  const number = 11;
+  const pTagStyle = {
+    color: "red",
+  };
+  return (
+    <div className="test-class">
+      <p style={pTagStyle}>안녕하세요. 리액트입니다.</p>
+      {/* 주석을 사용하는 방법입니다. */}
+      {/* 삼항연ㅅ간자를 사용해 볼게요. */}
+      <p style={pTagStyle}>{number > 10 ? number + "은 10보다 크다." : number + "10보다 작다"}</p>
+    </div>
+  );
 }
-
-function Mother() {
-  return <Son />;
-}
-
-function Grandfather() {
-  return <Mother />;
-}
-
-function App() {
-  return <Grandfather />;
-}
-
-export default App;
