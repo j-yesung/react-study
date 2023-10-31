@@ -1,0 +1,6 @@
+{
+  "comfilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
