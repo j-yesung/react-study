@@ -1,10 +1,24 @@
-import React from 'react';
-import Layout from './Layout';
+import React, { useState } from 'react';
 
-export default function App() {
+function App() {
+  // react에서 변경해야할 값들은 state로 관리해줘야 함.
+  const [fruit, setFruit] = useState('');
+
   return (
-    <Layout>
-      <div>children이 생기는 영역입니다.</div>
-    </Layout>
+    <div>
+      과일 :{' '}
+      <input
+        value={fruit}
+        onChange={function (event) {
+          // console.log('event: ', event.target.value);
+          setFruit(event.target.value);
+        }}
+      />
+      <br />
+      <br />
+      {fruit}
+    </div>
   );
 }
+
+export default App;
