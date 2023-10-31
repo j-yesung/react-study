@@ -1,16 +1,21 @@
-import React from "react";
+import React from 'react';
+
+// props를 통해 부모 데이터를 전달받았다.
+function Son(props) {
+  console.log('props: ', props);
+  return <div>나는 {props.motherName}의 아들이에요!</div>;
+}
+
+// 부모 -> 자식 정보를 전달했다.
+function Mother() {
+  const name = '흥부인';
+  return <Son motherName={name} />;
+}
+
+function GrandFather() {
+  return <Mother />;
+}
 
 export default function App() {
-  const number = 11;
-  const pTagStyle = {
-    color: "red",
-  };
-  return (
-    <div className="test-class">
-      <p style={pTagStyle}>안녕하세요. 리액트입니다.</p>
-      {/* 주석을 사용하는 방법입니다. */}
-      {/* 삼항연ㅅ간자를 사용해 볼게요. */}
-      <p style={pTagStyle}>{number > 10 ? number + "은 10보다 크다." : number + "10보다 작다"}</p>
-    </div>
-  );
+  return <GrandFather />;
 }
