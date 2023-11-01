@@ -2,34 +2,27 @@ import React, { useState } from 'react';
 
 function App() {
   // react에서 변경해야할 값들은 state로 관리해줘야 함.
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
-
-  // id
-  const onIdChangeHandler = event => {
-    setId(event.target.value);
-  };
-  // pw
-  const onPwChangeHandler = event => {
-    setPw(event.target.value);
-  };
+  let [count, setCount] = useState(0);
 
   return (
     <div>
-      아이디 :
-      <input type="text" value={id} onChange={onIdChangeHandler} />
-      <br />
-      비밀번호 :
-      <input type="password" value={pw} onChange={onPwChangeHandler} />
-      <br />
+      <div>{count}</div>
       <button
-        onClick={function () {
-          alert(`고객님이 입력하신 아이디는 ${id}이며, 비밀번호는 ${pw}입니다.`);
-          setId(''); // 아이디 입력 칸 초기화
-          setPw(''); // 비밀번호 입력 칸 초기화
+        onClick={() => {
+          let plusConut = count + 1;
+          setCount(plusConut);
         }}
       >
-        로그인
+        증가
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          let desCount = count - 1;
+          setCount(desCount);
+        }}
+      >
+        감소
       </button>
     </div>
   );
