@@ -1,28 +1,43 @@
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { useRef, useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const countRef = useRef(0);
+  const idRef = useRef('');
+  const pwdRef = useRef('');
 
-  const plusStateCountButtonHandler = () => {
-    setCount(count + 1);
-  };
+  const [value, setValue] = useState('');
 
-  const plusRefCountButtonHandler = () => {
-    countRef.current++;
-    console.log('countRef.current: ', countRef.current);
-  };
+  // 렌더링이 될 때
+  useEffect(() => {
+    // input tag를 지칭함.
+    idRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    if (value.length >= 10) {
+      pwdRef.current.focus();
+    }
+  }, [value]);
 
   return (
     <>
       <div>
-        state 영역입니다. {count} <br />
-        <button onClick={plusStateCountButtonHandler}>state 증가</button>
+        아이디 :
+        <input
+          type="text"
+          value={value}
+          ref={idRef}
+          onChange={e => {
+            setValue(e.target.value);
+            // 리액트에서 state를 일어나게 하는 건 배치 업데이트이다.
+            // if (value.length >= 10) {
+            //   pwdRef.current.focus();
+            // }
+          }}
+        />
       </div>
       <div>
-        ref 영역입니다. {countRef.current} <br />
-        <button onClick={plusRefCountButtonHandler}>ref 증가</button>
+        비밀번호 : <input type="password" ref={pwdRef} />
       </div>
     </>
   );
