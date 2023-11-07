@@ -1,31 +1,43 @@
-import React, { useState } from 'react';
+import './App.css';
+import styled from 'styled-components';
+
+const StContainer = styled.div`
+  display: flex;
+`;
+const StBox = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid ${props => props.borderColor};
+  margin: 20px;
+`;
+
+// 박스의 색
+const boxList = ['red', 'blue', 'green'];
+
+// 색을 넣으면 이름 반환
+const getBoxName = color => {
+  switch (color) {
+    case 'red':
+      return '빨간 박스';
+    case 'blue':
+      return '파란 박스';
+    case 'green':
+      return '초록 박스';
+    default:
+      break;
+  }
+};
 
 function App() {
-  // react에서 변경해야할 값들은 state로 관리해줘야 함.
-  let [count, setCount] = useState(0);
-
   return (
-    <div>
-      <div>{count}</div>
-      <button
-        onClick={() => {
-          let plusConut = count + 1;
-          setCount(plusConut);
-        }}
-      >
-        증가
-      </button>
-      <br />
-      <button
-        onClick={() => {
-          let desCount = count - 1;
-          setCount(desCount);
-        }}
-      >
-        감소
-      </button>
-    </div>
+    <StContainer>
+      {boxList.map(box => {
+        return <StBox borderColor={box}>{getBoxName(box)}</StBox>;
+      })}
+    </StContainer>
   );
 }
+
+// props : 부모 컴포 -> 자식 컴포
 
 export default App;
