@@ -1,26 +1,31 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 function App() {
-  const [value, setValue] = useState('');
-  // clean up
-  useEffect(() => {
-    console.log(`hello useEffect! ${value}`);
+  const [count, setCount] = useState(0);
+  const countRef = useRef(0);
 
-    // 컴포넌트가 죽을 때, 실행
-    return () => {
-      console.log('사라짐!');
-    };
-  }, [value]);
+  const plusStateCountButtonHandler = () => {
+    setCount(count + 1);
+  };
+
+  const plusRefCountButtonHandler = () => {
+    countRef.current++;
+    console.log('countRef.current: ', countRef.current);
+  };
+
   return (
     <>
       <div>
-        <input type="text" value={value} onChange={event => setValue(event.target.value)} />
+        state 영역입니다. {count} <br />
+        <button onClick={plusStateCountButtonHandler}>state 증가</button>
+      </div>
+      <div>
+        ref 영역입니다. {countRef.current} <br />
+        <button onClick={plusRefCountButtonHandler}>ref 증가</button>
       </div>
     </>
   );
 }
-
-// props : 부모 컴포 -> 자식 컴포
 
 export default App;
