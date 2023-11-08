@@ -1,14 +1,33 @@
-import { useSelector } from 'react-redux';
-import './App.css';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function App() {
-  // 여기에서 store에 접근하여 counter의 값을 읽어오자
-  // useSelector
-  const data = useSelector(state => state);
+// 사용할 Action creator를 import 합니다.
+import { minusOne, plusOne } from './redux/modules/counter';
 
-  console.log(data);
+const App = () => {
+  const dispatch = useDispatch();
+  const number = useSelector(state => state.counter.number);
 
-  return <div>Redux</div>;
-}
+  return (
+    <div>
+      {number}
+      <button
+        onClick={() => {
+          dispatch(plusOne()); // 액션객체를 Action creator로 변경합니다.
+        }}
+      >
+        + 1
+      </button>
+      {/* 빼기 버튼 추가 */}
+      <button
+        onClick={() => {
+          dispatch(minusOne()); // 액션객체를 Action creator로 변경합니다.
+        }}
+      >
+        - 1
+      </button>
+    </div>
+  );
+};
 
 export default App;
