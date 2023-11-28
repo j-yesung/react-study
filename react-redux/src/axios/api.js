@@ -8,22 +8,22 @@ const instance = axios.create({
 instance.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   config => {
-    console.log('🚀 ~ 인터셉터 요청 성공 ', config);
+    // console.log('🚀 ~ 인터셉터 요청 성공 ', config);
     return config;
   },
   error => {
-    console.log('🚀 ~ 인터셉터 요청 오류', error);
+    // console.log('🚀 ~ 인터셉터 요청 오류', error);
     return Promise.reject(error);
   },
 );
 
 instance.interceptors.response.use(
   response => {
-    console.log('🚀 ~ 인터셉터 응답 받았습니다. ', response);
+    // console.log('🚀 ~ 인터셉터 응답 받았습니다. ', response);
     return response;
   },
   error => {
-    console.log('🚀 ~ 응답이... 공습 경보! ', error);
+    // console.log('🚀 ~ 응답이... 공습 경보! ', error);
     return Promise.reject(error);
   },
 );

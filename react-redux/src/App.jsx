@@ -1,110 +1,35 @@
-// import axios from 'axios';
-import api from './axios/api';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { minusNumber, __addNumber } from './redux/modules/counter';
 
 const App = () => {
-  const [todo, setTodo] = useState({
-    title: '',
-  });
-  const [todos, setTodos] = useState(null);
+  const dispatch = useDispatch();
+  const [number, setNumber] = useState(0);
+  const globalNumber = useSelector(state => state.counter.number);
 
-  // patch에서 사용할 id, 수정값의 state를 추가
-  const [targetId, setTargetId] = useState(null);
-  const [editTodo, setEditTodo] = useState({
-    title: '',
-  });
-
-  const fetchTodos = async () => {
-    const { data } = await api.get('/todos');
-    setTodos(data);
+  const onChangeHandler = evnet => {
+    const { value } = evnet.target;
+    setNumber(+value);
   };
 
-  const onSubmitHandler = todo => {
-    api.post('/todos', todo);
-    setTodos([...todos, todo]);
-    setTodo({ title: '' });
+  // thunk 함수를 디스패치한다. payload는 thunk함수에 넣어주면,
+  // 리덕스 모듈에서 payload로 받을 수 있다.
+  const onClickAddNumberHandler = () => {
+    dispatch(__addNumber(number));
   };
 
-  const onClickDeleteButtonHandler = todoId => {
-    api.delete(`/todos/${todoId}`);
-    return todos.filter(todo => todo.id !== todoId);
+  const onClickMinusNumberHandler = () => {
+    dispatch(minusNumber(number));
   };
-
-  // 수정버튼 이벤트 핸들러 추가 👇
-  const onClickEditButtonHandler = (todoId, edit) => {
-    api.patch(`/todos/${todoId}`, edit);
-    return todos.map(todo => {
-      if (todo.id === todoId) {
-        return edit;
-      }
-      return todo;
-    });
-  };
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
 
   return (
-    <>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          onSubmitHandler(todo);
-        }}
-      >
-        {/* 👇 수정기능에 필요한 id, 수정값 input2개와 수정하기 버튼을 추가 */}
-        <div>
-          <input
-            type="text"
-            placeholder="수정하고싶은 Todo ID"
-            onChange={ev => {
-              setTargetId(ev.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="수정값 입력"
-            onChange={ev => {
-              setEditTodo({
-                ...editTodo,
-                title: ev.target.value,
-              });
-            }}
-          />
-          <button
-            // type='button' 을 추가해야 form의 영향에서 벗어남
-            type="button"
-            onClick={() => onClickEditButtonHandler(targetId, editTodo)}
-          >
-            수정하기
-          </button>
-        </div>
-        <input
-          type="text"
-          onChange={ev => {
-            const { value } = ev.target;
-            setTodo({
-              ...todo,
-              title: value,
-            });
-          }}
-        />
-        <button>추가하기</button>
-      </form>
-      <div>
-        {todos?.map(todo => (
-          <div key={todo.id}>
-            {/* todo의 아이디를 화면에 표시 */}
-            {todo.title}
-            &nbsp;
-            <button type="button" onClick={() => onClickDeleteButtonHandler(todo.id)}>
-              삭제하기
-            </button>
-          </div>
-        ))}
-      </div>
-    </>
+    <div>
+      <div>{globalNumber}</div>
+      <input type="number" onChange={onChangeHandler} />
+      <button onClick={onClickAddNumberHandler}>더하기</button>
+      <button onClick={onClickMinusNumberHandler}>빼기</button>
+    </div>
   );
 };
 
